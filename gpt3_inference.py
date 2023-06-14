@@ -128,7 +128,9 @@ if __name__=='__main__':
     parser.add_argument('-shot', default="zeroshot", help="Choose between zeroshot or fewshot")
     parser.add_argument('-val_data', default="/local_data2/sung/gpt3/sitcom_reasoning_val.json", help="Enter the validation data path")
     parser.add_argument('-train_data', default="/local_data2/sung/gpt3/sitcom_reasoning_train.json",help="Enter the training data path")
+
     args = parser.parse_args()
+    openai.api_key = args.openai_key
     seed_everything(42)
     main(args)
 
