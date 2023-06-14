@@ -69,6 +69,7 @@ def zeroshot(args):
 
         pred_caption.append(pred_dict)
         gt_caption.append(gt_dict)
+    evaluate_metrics_total(pred_caption, gt_caption, 1)
 
 def fewshot(args):
     with open(args.val_data, "r") as f:
@@ -126,12 +127,13 @@ if __name__=='__main__':
     parser.add_argument('-openai_key',default=None, help="Enter your openai api key")
     parser.add_argument('-engine', default="text-davinci-002", help="Enter your openai api key")
     parser.add_argument('-shot', default="zeroshot", help="Choose between zeroshot or fewshot")
-    parser.add_argument('-val_data', default="/local_data2/sung/gpt3/sitcom_reasoning_val.json", help="Enter the validation data path")
-    parser.add_argument('-train_data', default="/local_data2/sung/gpt3/sitcom_reasoning_train.json",help="Enter the training data path")
+    parser.add_argument('-val_data', default="SMILE_v1_evaluation/sitcom_reasoning_val.json", help="Enter the validation data path")
+    parser.add_argument('-train_data', default="SMILE_v1_evaluation/sitcom_reasoning_train.json",help="Enter the training data path")
+    parser.add_argument('-random_seed', default=1234,type=int, help="random seed")
 
     args = parser.parse_args()
     openai.api_key = args.openai_key
-    seed_everything(42)
+    seed_everything(args.random_seed)
     main(args)
 
 

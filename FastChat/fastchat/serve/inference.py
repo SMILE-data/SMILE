@@ -333,8 +333,6 @@ def seed_everything(seed: int):
 
 # ## EVALUATION ##
 def main(args):
-    seed_everything(42)
-
     with open(args.val_data, "r") as f:
         validation_data = json.load(f)
     model_path = args.model_path
@@ -368,14 +366,15 @@ def main(args):
 
         pred_caption.append(pred_dict)
         gt_caption.append(gt_dict)
-        break
 
     evaluate_metrics_total(pred_caption, gt_caption, 1)
+
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-model_path', default="/local_data2/sung/checkpoints/sitcom_2/checkpoint-40",help="Enter the model path")
-    parser.add_argument('-val_data', default="/local_data2/sung/gpt3/sitcom_reasoning_val.json", help="Enter the validation data path")
-    parser.add_argument('-train_data', default="/local_data2/sung/gpt3/sitcom_reasoning_train.json",help="Enter the training data path")
+    parser.add_argument('-model_path', default=None,help="Enter the model path")
+    parser.add_argument('-val_data', default="SMILE_v1_evaluation/sitcom_reasoning_val.json",help="Enter the validation data path")
+    parser.add_argument('-train_data', default="SMILE_v1_evaluation/sitcom_reasoning_train.json",help="Enter the training data path")
+    parser.add_argument('-random_seed', default=1234, type=int, help="random seed")
     args = parser.parse_args()
-    seed_everything(42)
+    seed_everything(args.random_seed)
     main(args)

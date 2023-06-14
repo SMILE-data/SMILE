@@ -46,7 +46,7 @@ $ pip3 install bert-score
    - video_segments: 4482 video segments trimmed from video clip by utterances.
 
 4. SMILE dataset v.1 for evaluation
-   - We provide v.1 dataset for evaluation download in [hear](https://drive.google.com/file/d/19xsaRmZ6OC84iHnYHO5GwS_jlSZnGNzk/view?usp=sharing)
+   - We provide v.1 dataset for evaluation download in [here](https://drive.google.com/file/d/19xsaRmZ6OC84iHnYHO5GwS_jlSZnGNzk/view?usp=sharing)
    - Note that sitcom_reasoning_val.json and ted_reasoning_val.json are subset of smile_reasoning_val.json.
      
     ```
@@ -70,16 +70,17 @@ As the fine-tuneded GPT3 requires a certain openai api-key which the model was f
 Note that running GPT3 requires your own openai api-key and also charges.
 Replace the { } with your own information. 
 ```
-$ python gpt3_inferece.py -openai_key {your openai api key} -engine {name of gpt3 model} -shot {fewshot or zeroshot} -val_data {path/for/validation_data} -train_data {path/for/train_data} 
+$ python gpt3_inferece.py -openai_key {your openai api key} -engine {name of gpt3 model} -shot {fewshot or zeroshot} -val_data {path/for/validation_data} -train_data {path/for/train_data} -random_seed {any integer number} 
 ```
 #### Fine-tuned experiment (LLaMA)
 | Training data | Link |
-|-------------|------|
-| SMILE       | 테스트2 |
-| SMILE_TEL   | 테스트2 |
-| 테스트1        | 테스트2 |
+|--------------|------|
+| SMILE        | 테스트2 |
+| SMILE_Sitcom | 테스트2 |
+| SMILE_Ted    | 테스트2 |
+Replace the { } with your own information.
+Please evaluate the models with the provided v.1. dataset. 
 
-Replace the { } with your own information. 
 ```
-$ python FastChat/fastchat/serve/inference.py -model_path {path/for/fine-tuned model} -val_data {path/for/validation_data} -train_data {path/for/train_data} 
+$ python FastChat/fastchat/serve/inference.py -model_path {path/for/fine-tuned model} -val_data {path/for/validation_data} -train_data {path/for/train_data} -random_seed {any integer number}
 ```
