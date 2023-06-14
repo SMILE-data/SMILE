@@ -8,10 +8,15 @@ It comprises SMILE dataset, and codes involving processing dataset and generatio
 $ conda create -n SMILE python==3.10.11
 $ conda activate SMILE
 
-# move to fastchat/ directory
+# move to FastChat/ directory
+$ cd FastChat
+
 $ pip3 install --upgrade pip  
 $ pip3 install -e .
 $ pip3 install openai
+$ pip3 install scikit-image
+$ pip3 install evaluate
+$ pip3 install bert-score
 ```
 
 
