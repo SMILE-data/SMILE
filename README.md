@@ -92,3 +92,13 @@ Replace the { } with your own information.
 ```
 $ python FastChat/fastchat/serve/inference.py -model_path {path/for/fine-tuned model} -val_data {path/for/validation_data} -train_data {path/for/train_data} -random_seed {any integer number}
 ```
+
+## Acknowledgement
+We are grateful for the following awesome projects, our SMILE arising from:
+- [GPT3](https://arxiv.org/pdf/2005.14165.pdf): Language Models are Few-Shot Learners
+- [LLaMA](https://github.com/facebookresearch/llama): LLaMA: Open and Efficient Foundation Language Models
+- [Vicuna](https://github.com/lm-sys/FastChat): Vicuna: An Open-Source Chatbot Impressing GPT-4 with 90% ChatGPT Quality
+- [MUStARD](https://github.com/soujanyaporia/MUStARD): Towards Multimodal Sarcasm Detection (An _Obviously_ Perfect Paper)
+- [UR-FUNNY](https://aclanthology.org/D19-1211/): UR-FUNNY: A Multimodal Language Dataset for Understanding Humor
+
+
