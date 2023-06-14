@@ -6,7 +6,7 @@ It comprises SMILE dataset, and codes involving processing dataset and generatio
 
 
 ### Download the SMILE Dataset
-1. Download SMILE dataset in [Dataset]([https://github.com/POZAlabs/ComMU-code/tree/master/dataset](https://drive.google.com/file/d/17v318r5DQp4loh28WD9vVUtvS5xeKpR9/view))
+1. Download SMILE dataset in [Dataset](https://drive.google.com/file/d/17v318r5DQp4loh28WD9vVUtvS5xeKpR9/view)
 2. unzip midifiles(`commu_midi.tar`).
     ```
     $ cd ComMU-Code
