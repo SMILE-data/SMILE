@@ -88,15 +88,14 @@ We provide the pre-trained weights of the LLaMA for the research purpose only.
 | SMILE_Sitcom | [Sitcom_checkpoint](https://www.dropbox.com/sh/fbytnml1utm51mb/AAC8a41vKgSCE2LxY-bm77Lsa?dl=0) |
 | SMILE_Ted    | [Ted_checkpoint](https://www.dropbox.com/sh/4zzsonu8fo9lbh8/AACJlCxv_hW7DDD0GTadFGE1a?dl=0)    |
 
-```
-    
+   ``` 
     ├── SMILE
          ├── checkpoint
     ├── SMILE_SITCOM
          ├── checkpoint
     ├── SMILE_TED
          ├── checkpoint
-    ```
+   ```
 
 
 Replace the { } with your own information.
