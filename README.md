@@ -22,25 +22,22 @@ $ pip3 install bert-score
 
 ### Download the SMILE Dataset
 1. Download SMILE dataset in [here](https://drive.google.com/file/d/17v318r5DQp4loh28WD9vVUtvS5xeKpR9/view)
-2. unzip midifiles(`commu_midi.tar`).
+2. unzip the dataset.
+
     ```
-    $ cd ComMU-Code
-    $ tar -xvf /dataset/commu_midi.tar -C /dataset/
-    ```
-    and if the project tree looks like this, it is ready for preprocessing. 
-    ```
-    .
-    ├── commu_meta.csv
-    └── commu_midi
-        └── train
-            └── raw
-                └── midifiles(.mid)
-        └── val
-            └── raw
-                └── midifiles(.mid)
+    
+    ├── annotations
+    |    ├── data_split.json
+    |    ├── GT_laughter_reason.json
+    |    └── multimodal_textual_representation.json
+    |
+    └── videos
+        └── SMILE_videos.tar
+                ├── video_clips
+                └── video_segments
+    
     ``` 
 
-## Data processing
 
 
 
