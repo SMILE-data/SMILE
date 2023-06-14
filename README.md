@@ -76,7 +76,9 @@ $ python gpt3_inferece.py -openai_key {your openai api key} -engine {name of gpt
 | SMILE        | 테스트2 |
 | SMILE_Sitcom | 테스트2 |
 | SMILE_Ted    | 테스트2 |
+
 Replace the { } with your own information.
+
 Please evaluate the models with the provided v.1. dataset. 
 
 ```
