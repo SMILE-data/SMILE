@@ -2,7 +2,17 @@
 
 This is the repository of SMILE: A Multimodal Dataset for Understanding Laughter. 
 It comprises SMILE dataset, and codes involving processing dataset and generation explanation reason behind the laughter.
-hello
+
+## Installation
+```
+$ conda create -n SMILE python==3.10.11
+$ conda activate SMILE
+
+# move to fastchat/ directory
+$ pip3 install --upgrade pip  
+$ pip3 install -e .
+$ pip3 install openai
+```
 
 
 ### Download the SMILE Dataset

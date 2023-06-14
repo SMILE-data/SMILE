@@ -362,8 +362,6 @@ def chat_loop(
                 max_new_tokens=5000,
             )
 
-
-
         output_ids_ = output_ids[0][len(input_ids[0]):]
         outputs = tokenizer.decode(output_ids_, skip_special_tokens=True).strip()
         #outputs = chatio.stream_output(output_stream)
@@ -386,45 +384,6 @@ def chat_loop(
     re1 = evaluate_metrics_total(pred_caption, gt_caption, 1)
     pdb.set_trace()
 
-
-
-    # while True:
-    #     try:
-    #         inp = chatio.prompt_for_input(conv.roles[0])
-    #     except EOFError:
-    #         inp = ""
-    #     if not inp:
-    #         print("exit...")
-    #         break
-    #
-    #     conv.append_message(conv.roles[0], inp)
-    #     conv.append_message(conv.roles[1], None)
-    #
-    #     if is_chatglm:
-    #         generate_stream_func = chatglm_generate_stream
-    #         prompt = conv.messages[conv.offset:]
-    #     else:
-    #         generate_stream_func = generate_stream
-    #         prompt = conv.get_prompt()
-    #
-    #     gen_params = {
-    #         "model": model_path,
-    #         "prompt": prompt,
-    #         "temperature": temperature,
-    #         "max_new_tokens": max_new_tokens,
-    #         "stop": conv.stop_str,
-    #         "stop_token_ids": conv.stop_token_ids,
-    #         "echo": False,
-    #     }
-    #
-    #     chatio.prompt_for_output(conv.roles[1])
-    #     output_stream = generate_stream_func(model, tokenizer, gen_params, device)
-    #     outputs = chatio.stream_output(output_stream)
-    #     # NOTE: strip is important to align with the training data.
-    #     conv.messages[-1][-1] = outputs.strip()
-    #
-    #     if debug:
-    #         print("\n", {"prompt": prompt, "outputs": outputs}, "\n")
 
 
 def add_model_args(parser):
@@ -476,14 +435,14 @@ import json
 import os
 from tqdm import tqdm
 import sys
-sys.path.append("/home/sung/krafton/Conversation/caption_eval")
-from eval_metrics import evaluate_metrics_from_lists, evaluate_metrics, evaluate_metrics_total
+sys.path.append("./caption_evaluation")
+from eval_metrics import evaluate_metrics_total
 
 #ted_reasoning_val.json
 # with open("/home/hyun/project/LLM/FastChat/playground/cross_validation/sitcom/sitcom_reasoning_val_2.json", "r") as f:
 #     sitcom_detection_val = json.load(f)
 
-with open("/home/hyun/project/LLM/FastChat/playground/cross_validation/sitcom/sitcom_reasoning_val_2.json", "r") as f:
+with open("/local_data2/sung/gpt3/sitcom_reasoning_val.json", "r") as f:
     sitcom_detection_val = json.load(f)
 model_path = "/local_data2/sung/checkpoints/sitcom_2/checkpoint-40"
 
@@ -516,7 +475,6 @@ for i in tqdm(range(len(sitcom_detection_val))):
 
     output_ids_ = output_ids[0][len(input_ids[0]):]
     outputs = tokenizer.decode(output_ids_, skip_special_tokens=True).strip()
-    pdb.set_trace()
 
 
     #define dictionary
@@ -526,4 +484,4 @@ for i in tqdm(range(len(sitcom_detection_val))):
     pred_caption.append(pred_dict)
     gt_caption.append(gt_dict)
 
-re1=evaluate_metrics_total(pred_caption, gt_caption,1)
+evaluate_metrics_total(pred_caption, gt_caption,1)

@@ -9,6 +9,10 @@ import torch
 import json
 import os
 from tqdm import tqdm
+import sys
+sys.path.append("./caption_evaluation")
+from eval_metrics import evaluate_metrics_total
+
 def fewshot_metadata(engine, shot1, shot2, shot3, query):
     prompt = f"{shot1}###{shot2}###{shot3}###{query}"
     response = openai.Completion.create(
@@ -106,8 +110,8 @@ def fewshot(args):
 
         pred_caption.append(pred_dict)
         gt_caption.append(gt_dict)
-        pdb.set_trace()
 
+    evaluate_metrics_total(pred_caption, gt_caption, 1)
 
 
 
