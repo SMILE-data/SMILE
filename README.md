@@ -38,7 +38,11 @@ $ pip3 install bert-score
     
     ``` 
 3. Details about each file
-   - sdsd:D w
+   - data_split.json: key index for train, validation, test split
+   - GT_laughter_reason.json: Ground-Truth laughter reason for video clip
+   - multimodal_textual_representation.json: multimodal textual representation encoded from video clip
+   - video_clips: 887 video clips from sitcom and TED, **Note**: sitcom has an underbar in the key index, while TED does not.
+   - video_segments: 4482 video segments trimmed from video clip by utterances.
 
 
 
