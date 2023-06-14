@@ -42,10 +42,19 @@ $ pip3 install bert-score
    - data_split.json: key index for train, validation, test split
    - GT_laughter_reason.json: Ground-Truth laughter reason for video clip
    - multimodal_textual_representation.json: multimodal textual representation encoded from video clip
-   - video_clips: 887 video clips from sitcom and TED, **Note**: sitcom has an underbar in the key index, while TED does not.
+   - video_clips: 887 video clips from sitcom and TED, **Note**: sitcom has an underbar in the key index, while TED does not. You can use this information for splitting our dataset by video types.
    - video_segments: 4482 video segments trimmed from video clip by utterances.
 
-
+4. v.1 dataset for evaluation
+   - We provide v.1 dataset for evaluation download in [hear](https://drive.google.com/file/d/19xsaRmZ6OC84iHnYHO5GwS_jlSZnGNzk/view?usp=sharing)
+   -     ```
+    
+    ├── SMILE_v1_evaluation
+         ├── smile_reasoning_val.json
+         ├── sitcom_reasoning_val.json
+         └── ted_reasoning_val.json
+    ``` 
+   - Note that sitcom_reasoning_val.json and ted_reasoning_val.json are subset of smile_reasoning_val.json.
 
 ## Evaluation
 
