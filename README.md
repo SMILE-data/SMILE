@@ -45,7 +45,7 @@ $ pip3 install bert-score
    - video_clips: 887 video clips from sitcom and TED, **Note**: sitcom has an underbar in the key index, while TED does not. You can use this information for splitting our dataset by video types.
    - video_segments: 4482 video segments trimmed from video clip by utterances.
 
-4. v.1 dataset for evaluation
+4. SMILE dataset v.1 for evaluation
    - We provide v.1 dataset for evaluation download in [hear](https://drive.google.com/file/d/19xsaRmZ6OC84iHnYHO5GwS_jlSZnGNzk/view?usp=sharing)
    - Note that sitcom_reasoning_val.json and ted_reasoning_val.json are subset of smile_reasoning_val.json.
      
