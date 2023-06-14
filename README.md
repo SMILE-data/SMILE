@@ -37,7 +37,8 @@ $ pip3 install bert-score
                 └── video_segments
     
     ``` 
-
+3. Details about each file
+   - sdsd:D w
 
 
 
