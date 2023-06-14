@@ -1,7 +1,7 @@
 # SMILE: A Multi-Modal Dataset for Understanding Laughter
 
 This is the repository of SMILE: A Multimodal Dataset for Understanding Laughter. 
-It comprises SMILE dataset, and codes involving processing dataset and generation explanation reason behind the laughter.
+It comprises SMILE dataset, and codes involving the description of the dataset and evaluation for laughter reasoning.
 
 ## Installation
 ```
@@ -21,7 +21,7 @@ $ pip3 install bert-score
 
 
 ### Download the SMILE Dataset
-0. Now, We are updating SMILE dataset v.2. After the update, we will update the laugh reasoning benchmark.
+0. Now, we are updating SMILE dataset v.2. After the update, we will update the laugh reasoning benchmark.
 1. Download SMILE dataset in [here](https://drive.google.com/file/d/17v318r5DQp4loh28WD9vVUtvS5xeKpR9/view)
 2. unzip the dataset.
 
