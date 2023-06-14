@@ -32,7 +32,7 @@ $ pip3 install bert-score
     |    └── multimodal_textual_representation.json
     |
     └── videos
-         └── SMILE_videos.tar
+         └── SMILE_videos.zip
                 ├── video_clips
                 └── video_segments
     
