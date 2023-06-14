@@ -301,7 +301,7 @@ def evaluate_metrics_total(prediction_file: Union[str, Path, List[Dict[str, str]
     import os
     #Evalutate BERTScore
     eval_path = "./eval"
-    os.makedirs(eval_path)
+    os.makedirs(eval_path,exist_ok=True)
 
     pred_path, gt_path = os.path.join(eval_path, "pred.txt"), os.path.join(eval_path, "gt.txt")
     pred_txt  = open(pred_path, "w")
