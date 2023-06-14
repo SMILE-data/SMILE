@@ -77,11 +77,11 @@ Replace the { } with your own information.
 $ python gpt3_inferece.py -openai_key {your openai api key} -engine {name of gpt3 model} -shot {fewshot or zeroshot} -val_data {path/for/validation_data} -train_data {path/for/train_data} -random_seed {any integer number} 
 ```
 #### Fine-tuned experiment (LLaMA)
-| Training data | Link          |
-|--------------|---------------|
-| SMILE        | to be updated |
-| SMILE_Sitcom | to be updated    |
-| SMILE_Ted    | to be updated   |
+| Training data | Link                                                                                                    |
+|--------------|---------------------------------------------------------------------------------------------------------|
+| SMILE        | [SMILE_checkpoint](https://www.dropbox.com/sh/0codb006h40mm61/AABHnPAQt2e_JYQNxJiJ9jyFa?dl=0)  |
+| SMILE_Sitcom | [Sitcom_checkpoint](https://www.dropbox.com/sh/fbytnml1utm51mb/AAC8a41vKgSCE2LxY-bm77Lsa?dl=0) |
+| SMILE_Ted    | [Ted_checkpoint](https://www.dropbox.com/sh/4zzsonu8fo9lbh8/AACJlCxv_hW7DDD0GTadFGE1a?dl=0)    |
 
 Replace the { } with your own information.
 
