@@ -2,13 +2,19 @@
 import abc
 import gc
 import math
-import pdb
 from typing import Optional
-import sys
 import warnings
-
+import argparse
 import psutil
+import random, os
+import numpy as np
 import torch
+import json
+from tqdm import tqdm
+import sys
+sys.path.append("./caption_evaluation")
+from eval_metrics import evaluate_metrics_total
+
 from transformers import (
     AutoTokenizer,
     AutoModelForCausalLM,
@@ -285,75 +291,66 @@ class ChatIO(abc.ABC):
     def stream_output(self, output_stream):
         """Stream output."""
 
+# def add_model_args(parser):
+#     parser.add_argument(
+#         "--model-path",
+#         type=str,
+#         # default="lmsys/fastchat-t5-3b-v1.0",
+#         default="/local_data2/sung/checkpoints/sitcom_detection_0530_1/checkpoint-20",
+#         help="The path to the weights. This can be a local folder or a Hugging Face repo ID.",
+#     )
+#     parser.add_argument(
+#         "--device", type=str, choices=["cpu", "cuda", "mps"], default="cuda",
+#         help="The device type"
+#     )
+#     parser.add_argument(
+#         "--gpus",
+#         type=str,
+#         default=0,
+#         help="A single GPU like 1 or multiple GPUs like 0,2"
+#     )
+#     parser.add_argument("--num-gpus", type=int, default=1)
+#     parser.add_argument(
+#         "--max-gpu-memory",
+#         type=str,
+#         help="The maximum memory per gpu. Use a string like '13Gib'",
+#     )
+#     parser.add_argument(
+#         "--load-8bit", action="store_true", help="Use 8-bit quantization"
+#     )
+#     parser.add_argument(
+#         "--cpu-offloading", action="store_true", help="Only when using 8-bit quantization: Offload excess weights to the CPU that don't fit on the GPU"
+#     )
 
-def chat_loop(
-    model_path: str,
-    device: str,
-    num_gpus: int,
-    max_gpu_memory: str,
-    load_8bit: bool,
-    cpu_offloading: bool,
-    conv_template: Optional[str],
-    temperature: float,
-    max_new_tokens: int,
-    debug: bool,
-):
-    # Model
+def seed_everything(seed: int):
+    random.seed(seed)
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = True
+
+# ## EVALUATION ##
+def main(args):
+    seed_everything(42)
+
+    with open(args.val_data, "r") as f:
+        validation_data = json.load(f)
+    model_path = args.model_path
+
     model, tokenizer = load_model(
-        model_path, device, num_gpus, max_gpu_memory, load_8bit, cpu_offloading, debug
-    )
+        model_path, "cuda", 1, None, False, False, False)
 
-    is_chatglm = "chatglm" in str(type(model)).lower()
-
-    # Chat
-    if conv_template:
-        conv = conv_templates[conv_template].copy()
-    else:
-        conv = get_default_conv_template(model_path).copy()
-
-    inputs = ["why do people laugh?", "tell me how are you"]
-    import json
-    from tqdm import tqdm
-    import sys
-    sys.path.append("/home/sung/krafton/Conversation/caption_eval")
-    from eval_metrics import evaluate_metrics_from_lists, evaluate_metrics, evaluate_metrics_total
-
-    #load validation json file
-    with open("/local_data2/sung/dataset/sitcom_reasoning_val.json", "r") as f:
-        sitcom_detection_val = json.load(f)
-    # list for evaluation
+    # # evaluation
     gt_caption = []
     pred_caption = []
 
-    for iiii in tqdm(range(len(sitcom_detection_val))):
+    for i in tqdm(range(len(validation_data))):
+        inputs = validation_data[i]['conversations'][0]['value'] + "### Assistant:"
 
-        inputs = sitcom_detection_val[iiii]['conversations'][0]['value']
-        inp=inputs
+        input_ids = tokenizer([inputs]).input_ids
 
-        conv.append_message(conv.roles[0], inp)
-        conv.append_message(conv.roles[1], None)
-
-        if is_chatglm:
-            generate_stream_func = chatglm_generate_stream
-            prompt = conv.messages[conv.offset:]
-        else:
-            generate_stream_func = generate_stream
-            prompt = conv.get_prompt()
-
-        gen_params = {
-            "model": model_path,
-            "prompt": prompt,
-            "temperature": temperature,
-            "max_new_tokens": max_new_tokens,
-            "stop": conv.stop_str,
-            "stop_token_ids": conv.stop_token_ids,
-            "echo": False,
-        }
-
-        # chatio.prompt_for_output(conv.roles[1])
-        #output_stream = generate_stream_func(model, tokenizer, gen_params, device)
-
-        input_ids = tokenizer([prompt]).input_ids
         with torch.no_grad():
             output_ids = model.generate(
                 torch.as_tensor(input_ids).cuda(),
@@ -364,124 +361,21 @@ def chat_loop(
 
         output_ids_ = output_ids[0][len(input_ids[0]):]
         outputs = tokenizer.decode(output_ids_, skip_special_tokens=True).strip()
-        #outputs = chatio.stream_output(output_stream)
-        # outputs = stream_output(output_stream)
-        if outputs=="":
-            continue
 
-        #####Save data for evaluation
-        pred_dict = {"file_name": iiii, "caption_predicted": outputs}
-        gt_dict = {"file_name": iiii, "caption_reference_01": sitcom_detection_val[iiii]['conversations'][1]['value']}
+        # define dictionary
+        pred_dict = {"file_name": i, "caption_predicted": outputs}
+        gt_dict = {"file_name": i, "caption_reference_01": validation_data[i]['conversations'][1]['value']}
 
         pred_caption.append(pred_dict)
         gt_caption.append(gt_dict)
+        break
 
-        # NOTE: strip is important to align with the training data.
-        # conv.messages[-1][-1] = outputs.strip()
-        # pdb.set_trace()
-        # if debug:
-        #     print("\n", {"prompt": prompt, "outputs": outputs}, "\n")
-    re1 = evaluate_metrics_total(pred_caption, gt_caption, 1)
-    pdb.set_trace()
-
-
-
-def add_model_args(parser):
-    parser.add_argument(
-        "--model-path",
-        type=str,
-        # default="lmsys/fastchat-t5-3b-v1.0",
-        default="/local_data2/sung/checkpoints/sitcom_detection_0530_1/checkpoint-20",
-        help="The path to the weights. This can be a local folder or a Hugging Face repo ID.",
-    )
-    parser.add_argument(
-        "--device", type=str, choices=["cpu", "cuda", "mps"], default="cuda",
-        help="The device type"
-    )
-    parser.add_argument(
-        "--gpus",
-        type=str,
-        default=0,
-        help="A single GPU like 1 or multiple GPUs like 0,2"
-    )
-    parser.add_argument("--num-gpus", type=int, default=1)
-    parser.add_argument(
-        "--max-gpu-memory",
-        type=str,
-        help="The maximum memory per gpu. Use a string like '13Gib'",
-    )
-    parser.add_argument(
-        "--load-8bit", action="store_true", help="Use 8-bit quantization"
-    )
-    parser.add_argument(
-        "--cpu-offloading", action="store_true", help="Only when using 8-bit quantization: Offload excess weights to the CPU that don't fit on the GPU"
-    )
-
-def seed_everything(seed: int):
-    import random, os
-    import numpy as np
-    import torch
-
-    random.seed(seed)
-    os.environ['PYTHONHASHSEED'] = str(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = True
-# ## EVALUATION ##
-#load val set and model
-import json
-import os
-from tqdm import tqdm
-import sys
-sys.path.append("./caption_evaluation")
-from eval_metrics import evaluate_metrics_total
-
-#ted_reasoning_val.json
-# with open("/home/hyun/project/LLM/FastChat/playground/cross_validation/sitcom/sitcom_reasoning_val_2.json", "r") as f:
-#     sitcom_detection_val = json.load(f)
-
-with open("/local_data2/sung/gpt3/sitcom_reasoning_val.json", "r") as f:
-    sitcom_detection_val = json.load(f)
-model_path = "/local_data2/sung/checkpoints/sitcom_2/checkpoint-40"
-
-
-model, tokenizer = load_model(
-        model_path, "cuda", 1, None, False, False, False)
-
-# # evaluation
-conv = get_default_conv_template(model_path).copy()
-
-gt_caption = []
-pred_caption = []
-generate_stream_func = generate_stream
-
-
-seed_everything(42)
-for i in tqdm(range(len(sitcom_detection_val))):
-
-    inputs = sitcom_detection_val[i]['conversations'][0]['value']+"### Assistant:"
-
-    input_ids = tokenizer([inputs]).input_ids
-
-    with torch.no_grad():
-        output_ids = model.generate(
-            torch.as_tensor(input_ids).cuda(),
-            do_sample=True,
-            temperature=0.5,
-            max_new_tokens=5000,
-        )
-
-    output_ids_ = output_ids[0][len(input_ids[0]):]
-    outputs = tokenizer.decode(output_ids_, skip_special_tokens=True).strip()
-
-
-    #define dictionary
-    pred_dict={"file_name":i, "caption_predicted":outputs}
-    gt_dict = {"file_name":i, "caption_reference_01":sitcom_detection_val[i]['conversations'][1]['value']}
-
-    pred_caption.append(pred_dict)
-    gt_caption.append(gt_dict)
-
-evaluate_metrics_total(pred_caption, gt_caption,1)
+    evaluate_metrics_total(pred_caption, gt_caption, 1)
+if __name__=='__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-model_path', default="/local_data2/sung/checkpoints/sitcom_2/checkpoint-40",help="Enter the model path")
+    parser.add_argument('-val_data', default="/local_data2/sung/gpt3/sitcom_reasoning_val.json", help="Enter the validation data path")
+    parser.add_argument('-train_data', default="/local_data2/sung/gpt3/sitcom_reasoning_train.json",help="Enter the training data path")
+    args = parser.parse_args()
+    seed_everything(42)
+    main(args)

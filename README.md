@@ -54,5 +54,5 @@ $ python gpt3_inferece.py -openai_key {your openai api key} -engine {gpt3 model}
 #### Fine-tuned experiment (LLaMA)
 Replace the { } with your own information. 
 ```
-$ bash llama_inference.sh 
+$ python FastChat/fastchat/serve/inference.py -model_path {pre-trained model path} -val_data {path/for/validation_data} -train_data {path/for/validation_data} 
 ```
