@@ -22,7 +22,7 @@ $ pip3 install bert-score
 
 ### Download the SMILE Dataset
 0. Now, we are updating SMILE dataset v.2. After the update, we will update the laugh reasoning benchmark.
-1. Download SMILE dataset in [here](https://drive.google.com/file/d/15KjSeYn3tjiHXiswLgffmxPEoMYtepv2/view?usp=sharing)
+1. Download SMILE dataset v.2 in [here](https://drive.google.com/file/d/15KjSeYn3tjiHXiswLgffmxPEoMYtepv2/view?usp=sharing)
 2. unzip the dataset.
 
     ```
