@@ -46,7 +46,7 @@ $ pip3 install bert-score
    - video_segments: 4482 video segments trimmed from video clip by utterances.
 
 4. SMILE dataset v.1 for evaluation
-   - We provide v.1 dataset for evaluation download in [hear](https://drive.google.com/file/d/19xsaRmZ6OC84iHnYHO5GwS_jlSZnGNzk/view?usp=sharing)
+   - We provide v.1 dataset for evaluation download in [hear](https://drive.google.com/file/d/1pPXli0F_2XJWqj1I4SHI93yOu1i1R5jF/view?usp=sharing)
    - Note that sitcom_reasoning_val.json and ted_reasoning_val.json are subset of smile_reasoning_val.json.
      
     ```
