@@ -62,24 +62,28 @@ $ pip3 install bert-score
 
 ### Laugh reasoning 
 We provide the inference code for in-context and zero-shot experiment using GPT3. 
+
 As the fine-tuneded GPT3 requires a certain openai api-key which the model was fine-tuned on, we instead provide the inferecne code for fine-tuned model using LLaMA. 
+
+Please evaluate the models with the provided v.1. dataset.
+
 
 #### In-context and Zero-shot experiment (GPT3)
 Note that running GPT3 requires your own openai api-key and also charges.
+
 Replace the { } with your own information. 
+
 ```
 $ python gpt3_inferece.py -openai_key {your openai api key} -engine {name of gpt3 model} -shot {fewshot or zeroshot} -val_data {path/for/validation_data} -train_data {path/for/train_data} -random_seed {any integer number} 
 ```
 #### Fine-tuned experiment (LLaMA)
-| Training data | Link |
-|--------------|------|
-| SMILE        | 테스트2 |
-| SMILE_Sitcom | 테스트2 |
-| SMILE_Ted    | 테스트2 |
+| Training data | Link          |
+|--------------|---------------|
+| SMILE        | to be updated |
+| SMILE_Sitcom | to be updated    |
+| SMILE_Ted    | to be updated   |
 
 Replace the { } with your own information.
-
-Please evaluate the models with the provided v.1. dataset. 
 
 ```
 $ python FastChat/fastchat/serve/inference.py -model_path {path/for/fine-tuned model} -val_data {path/for/validation_data} -train_data {path/for/train_data} -random_seed {any integer number}
