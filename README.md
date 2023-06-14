@@ -47,16 +47,18 @@ $ pip3 install bert-score
 
 4. v.1 dataset for evaluation
    - We provide v.1 dataset for evaluation download in [hear](https://drive.google.com/file/d/19xsaRmZ6OC84iHnYHO5GwS_jlSZnGNzk/view?usp=sharing)
+   - Note that sitcom_reasoning_val.json and ted_reasoning_val.json are subset of smile_reasoning_val.json.
      
-     ```
+    ```
     
     ├── SMILE_v1_evaluation
          ├── smile_reasoning_val.json
          ├── sitcom_reasoning_val.json
          └── ted_reasoning_val.json
-   
+    
     ``` 
-   - Note that sitcom_reasoning_val.json and ted_reasoning_val.json are subset of smile_reasoning_val.json.
+
+    
 
 ## Evaluation
 
