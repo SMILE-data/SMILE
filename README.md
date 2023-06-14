@@ -72,7 +72,7 @@ Please evaluate the models with the provided v.1. dataset.
 
 
 #### In-context and Zero-shot experiment (GPT3)
-Note that running GPT3 requires your own openai api-key and also charges.
+Note that running GPT3 requires your own openai api-key and it also charges for running the model.
 
 Replace the { } with your own information. 
 
@@ -80,6 +80,8 @@ Replace the { } with your own information.
 $ python gpt3_inferece.py -openai_key {your openai api key} -engine {name of gpt3 model} -shot {fewshot or zeroshot} -val_data {path/for/validation_data} -train_data {path/for/train_data} -random_seed {any integer number} 
 ```
 #### Fine-tuned experiment (LLaMA)
+We provide the pre-trained weights of the LLaMA for the research purpose only.
+
 | Training data | Link                                                                                                    |
 |--------------|---------------------------------------------------------------------------------------------------------|
 | SMILE        | [SMILE_checkpoint](https://www.dropbox.com/sh/0codb006h40mm61/AABHnPAQt2e_JYQNxJiJ9jyFa?dl=0)  |
@@ -87,7 +89,6 @@ $ python gpt3_inferece.py -openai_key {your openai api key} -engine {name of gpt
 | SMILE_Ted    | [Ted_checkpoint](https://www.dropbox.com/sh/4zzsonu8fo9lbh8/AACJlCxv_hW7DDD0GTadFGE1a?dl=0)    |
 
 Replace the { } with your own information.
-
 ```
 $ python FastChat/fastchat/serve/inference.py -model_path {path/for/fine-tuned model} -val_data {path/for/validation_data} -train_data {path/for/train_data} -random_seed {any integer number}
 ```
