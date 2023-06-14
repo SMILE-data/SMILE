@@ -49,10 +49,16 @@ As the fine-tuneded GPT3 requires a certain openai api-key which the model was f
 Note that running GPT3 requires your own openai api-key and also charges.
 Replace the { } with your own information. 
 ```
-$ python gpt3_inferece.py -openai_key {your openai api key} -engine {gpt3 model} -shot {fewshot or zeroshot} -val_data {path/for/validation_data} -train_data {path/for/validation_data} 
+$ python gpt3_inferece.py -openai_key {your openai api key} -engine {name of gpt3 model} -shot {fewshot or zeroshot} -val_data {path/for/validation_data} -train_data {path/for/train_data} 
 ```
 #### Fine-tuned experiment (LLaMA)
+| Training data | Link |
+|-------------|------|
+| SMILE       | 테스트2 |
+| SMILE_TEL   | 테스트2 |
+| 테스트1        | 테스트2 |
+
 Replace the { } with your own information. 
 ```
-$ python FastChat/fastchat/serve/inference.py -model_path {pre-trained model path} -val_data {path/for/validation_data} -train_data {path/for/validation_data} 
+$ python FastChat/fastchat/serve/inference.py -model_path {path/for/fine-tuned model} -val_data {path/for/validation_data} -train_data {path/for/train_data} 
 ```
