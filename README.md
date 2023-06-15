@@ -3,6 +3,8 @@
 This is the repository of SMILE: A Multimodal Dataset for Understanding Laughter. 
 It comprises SMILE dataset, and codes involving the description of the dataset and evaluation for laughter reasoning.
 
+[teaser_v3(1).pdf](https://github.com/SMILE-data/SMILE/files/11760859/teaser_v3.1.pdf)
+
 ## Installation
 ```
 $ conda create -n SMILE python==3.10.11
